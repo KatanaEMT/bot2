@@ -11,7 +11,7 @@ from profanity_check import predict, predict_prob
 async def chat_messages(message: types.Message):
     db = Database()
     print(message)
-    if message.chat.id == -4046687464:
+    if message.chat.id == 1691554964:
         ban_word_predict_prob = predict_prob([message.text])
         if ban_word_predict_prob > 0.1:
             await message.delete()

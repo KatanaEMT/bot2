@@ -11,8 +11,13 @@ async def start_keyboard():
         "Registration 😇",
         callback_data="registration"
     )
+    questionnaire_profile_button = InlineKeyboardButton(
+        text="questionnaire 👈(ﾟヮﾟ👈))",
+        callback_data="questionnaire"
+    )
     markup.add(questionnaire_button)
     markup.add(registration_button)
+    markup.add(questionnaire_profile_button)
     return markup
 
 

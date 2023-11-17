@@ -12,6 +12,7 @@ class Database:
             print('Database connected successfully')
 
         self.connection.execute(sql_queries.CREATE_USER_TABLE_QUERY)
+        self.connection.execute(sql_queries.CREATE_QUESTIONNAIRE_TABLE_QUERY)
         self.connection.execute(sql_queries.CREATE_BAN_USER_TABLE_QUERY)
         self.connection.execute(sql_queries.CREATE_USER_PROFILE_QUERY)
 
@@ -21,6 +22,13 @@ class Database:
         self.cursor.execute(
             sql_queries.INSERT_USER_QUERY,
             (None, telegram_id, username, first_name, last_name)
+        )
+        self.connection.commit()
+
+    def sql_inserts_questionnaire_profile(self, telegram_id, idea, problems):
+        self.cursor.execute(
+            sql_queries.INSERT_QUESTIONNAIRE_QUERY,
+            (telegram_id, idea, problems)
         )
         self.connection.commit()
 
@@ -55,4 +63,10 @@ class Database:
             (None, telegram_id, nickname, age, sex, biography, geolocation, photo)
         )
         self.connection.commit()
+
+    def sql_select_user_profile(self, telegram_id, idea, problems):
+        self.cursor.execute(
+            sql_queries.SELECT_USER_PROFILE_QUERY,
+            (telegram_id, idea, problems)
+        )
 
