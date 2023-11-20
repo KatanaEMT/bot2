@@ -29,24 +29,6 @@ async def mojo_call(call: types.CallbackQuery):
     )
 
 
-async def admin_call(call: types.Message):
-    if call.from_user.id == int(ADMIN_ID):
-        await bot.send_message(
-            chat_id=call.from_user.id,
-            text="Приветствую мастера (✿◡‿◡)"
-        )
-    else:
-        await bot.send_message(
-            chat_id=call.from_user.id,
-            text="Ты не мой мастер ㆆ_ㆆ)"
-        )
-
-
-async def admin_questionnaire(call: types.Message):
-    dp = Database()
-    if call.from_user.id == int(ADMIN_ID):
-
-
 def register_callback_handlers(dp: Dispatcher):
     dp.register_callback_query_handler(start_questionnaire_call,
                                        lambda call: call.data == "start_questionnaire")
@@ -54,5 +36,3 @@ def register_callback_handlers(dp: Dispatcher):
                                        lambda call: call.data == "python")
     dp.register_callback_query_handler(mojo_call,
                                        lambda call: call.data == "mojo")
-    dp.register_message_handler(admin_call,
-                                       lambda word: "id" in word.text)

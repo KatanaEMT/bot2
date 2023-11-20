@@ -22,7 +22,7 @@ class RegistrationStates(StatesGroup):
 
 async def registration_start(call: types.CallbackQuery):
     await bot.send_message(
-        chat_id=call.from_user.id,
+        chat_id=call.message.chat.id,
         text="Отправьте свой никнейм!"
     )
     await RegistrationStates.nickname.set()
@@ -34,7 +34,7 @@ async def load_nickname(message: types.Message,
         data['nickname'] = message.text
         print(data)
     await bot.send_message(
-        chat_id=message.from_user.id,
+        chat_id=message.chat.id,
         text="Сколько тебе лет?\n"
         "Используйте только цифры"
     )
@@ -47,7 +47,7 @@ async def load_age(message: types.Message,
         type(int(message.text))
     except ValueError:
         await bot.send_message(
-            chat_id=message.from_user.id,
+            chat_id=message.chat.id,
             text="Используйте только цифры!!!?\n"
                  "Регистрация начнется сначала"
         )
@@ -58,7 +58,7 @@ async def load_age(message: types.Message,
         data['age'] = message.text
         print(data)
     await bot.send_message(
-        chat_id=message.from_user.id,
+        chat_id=message.chat.id,
         text="Ваш пол?"
     )
     await RegistrationStates.next()
@@ -70,7 +70,7 @@ async def load_sex(message: types.Message,
         data['sex'] = message.text
         print(data)
     await bot.send_message(
-        chat_id=message.from_user.id,
+        chat_id=message.chat.id,
         text="Твоя биография?"
     )
     await RegistrationStates.next()
@@ -82,7 +82,7 @@ async def load_biography(message: types.Message,
         data['biography'] = message.text
         print(data)
     await bot.send_message(
-        chat_id=message.from_user.id,
+        chat_id=message.chat.id,
         text="Место проживания?"
     )
     await RegistrationStates.next()
@@ -94,7 +94,7 @@ async def load_geolocation(message: types.Message,
         data['geolocation'] = message.text
         print(data)
     await bot.send_message(
-        chat_id=message.from_user.id,
+        chat_id=message.chat.id,
         text="Отправьте фотографию?"
     )
     await RegistrationStates.next()
@@ -111,7 +111,7 @@ async def load_photo(message: types.Message,
     async with state.proxy() as data:
         with open(path.name, 'rb') as photo:
             await bot.send_photo(
-                chat_id=message.from_user.id,
+                chat_id=message.chat.id,
                 photo=photo,
                 caption=USER_FORM_TEXT.format(
                     nickname=data['nickname'],
@@ -131,7 +131,7 @@ async def load_photo(message: types.Message,
                 photo=path.name
             )
         await bot.send_message(
-            chat_id=message.from_user.id,
+            chat_id=message.chat.id,
             text="Регистрация завершена （づ￣3￣）づ╭❤️～"
         )
         await state.finish()
