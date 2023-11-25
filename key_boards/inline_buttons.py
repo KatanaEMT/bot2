@@ -19,10 +19,15 @@ async def start_keyboard():
         text="View Profiles ( ͡°( ͡° ͜ʖ( ͡° ͜ʖ ͡°)ʖ ͡°) ͡°))",
         callback_data="random_profiles"
     )
+    reference_menu_button = InlineKeyboardButton(
+        text="Reference menu ヽ(✿ﾟ▽ﾟ)ノ",
+        callback_data="reference_menu"
+    )
     markup.add(questionnaire_button)
     markup.add(registration_button)
     markup.add(my_profile_button)
     markup.add(random_profile_button)
+    markup.add(reference_menu_button)
     return markup
 
 
@@ -56,16 +61,11 @@ async def like_dislike_keyboard(owner_tg_id):
     return markup
 
 
-# async def profile_rename_keyboard(owner_tg_id):
-#     markup = InlineKeyboardMarkup()
-#     update_button = InlineKeyboardButton(
-#         "Update ❤✅",
-#         callback_data="update"
-#     )
-#     delete_button = InlineKeyboardButton(
-#         "Delete ❌",
-#         callback_data="delete"
-#     )
-#     markup.add(update_button)
-#     markup.add(delete_button)
-#     return markup
+async def reference_menu_keyboard():
+    markup = InlineKeyboardMarkup()
+    reference_button = InlineKeyboardButton(
+        "Reference Link 🔗",
+        callback_data="reference_link"
+    )
+    markup.add(reference_button)
+    return markup
