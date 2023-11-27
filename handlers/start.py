@@ -35,6 +35,12 @@ async def start_button(message: types.Message):
                     owner=user['tg_id'],
                     referral=message.from_user.id
                 )
+                db.sql_insert_referral_users(
+                    owner=user['tg_id'],
+                    common_users=message.from_user.id,
+                    user_name=message.from_user.username,
+                    first_name=message.from_user.first_name
+                )
             except sqlite3.IntegrityError:
                 pass
 

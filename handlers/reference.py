@@ -28,6 +28,19 @@ async def reference_menu_call(call: types.CallbackQuery):
     )
 
 
+async def reference_profile_call(call: types.CallbackQuery):
+    db = Database()
+    data = db.sql_select_referral_users(
+        owner=call.from_user.id
+    )
+    for dat in data:
+        await bot.send_message(
+            chat_id=call.from_user.id,
+            text=f'user_name: @{dat ["user_name"]} \n'
+                 f'first_name: {dat ["first_name"]}'
+        )
+
+
 async def reference_link_call(call: types.CallbackQuery):
     db = Database()
     user = db.sql_select_user(
@@ -57,3 +70,5 @@ def register_reference_handlers(dp: Dispatcher):
                                        lambda call: call.data == "reference_menu")
     dp.register_callback_query_handler(reference_link_call,
                                        lambda call: call.data == "reference_link")
+    dp.register_callback_query_handler(reference_profile_call,
+                                       lambda call: call.data == "referral_profile")

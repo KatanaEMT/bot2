@@ -16,6 +16,8 @@ class Database:
         self.connection.execute(sql_queries.CREATE_USER_PROFILE_QUERY)
         self.connection.execute(sql_queries.CREATE_LIKE_TABLE_QUERY)
         self.connection.execute(sql_queries.CREATE_REFERRAL_TABLE_QUERY)
+        self.connection.execute(sql_queries.CREATE_REFERRAL_USERS_TABLE_QUERY)
+
 
         try:
             self.connection.execute(sql_queries.ALTER_USER_TABLE)
@@ -170,3 +172,23 @@ class Database:
             (None, owner, referral,)
         )
         self.connection.commit()
+
+    def sql_insert_referral_users(self, owner, common_users, user_name, first_name):
+        self.cursor.execute(
+            sql_queries.INSERT_REFERRAL_USERS_QUERY,
+            (None, owner, common_users, user_name, first_name)
+        )
+        self.connection.commit()
+
+    def sql_select_referral_users(self, owner):
+        self.cursor.row_factory = lambda cursor, row: {
+            "id": row[0],
+            "owner_id": row[1],
+            "custom_id": row[2],
+            "user_name": row[3],
+            "first_name": row[4]
+        }
+        return self.cursor.execute(
+            sql_queries.SELECT_REFERRAL_USERS_QUERY,
+            (owner,)
+        ).fetchall()
