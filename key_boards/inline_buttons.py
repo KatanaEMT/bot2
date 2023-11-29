@@ -24,8 +24,8 @@ async def start_keyboard():
         callback_data="reference_menu"
     )
     news_button = InlineKeyboardButton(
-        "Latest News",
-        callback_data="news ✍️(◔◡◔)"
+        "Latest News ✍️(◔◡◔)",
+        callback_data="news"
     )
     my_news_button = InlineKeyboardButton(
         "My Favourite News (＠_＠;)",

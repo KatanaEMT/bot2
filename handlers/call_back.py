@@ -50,16 +50,6 @@ async def scraper_call(call: types.CallbackQuery):
         )
 
 
-async def anime_scraper_call(call: types.CallbackQuery):
-    scraper = AnimeScraper()
-    data = scraper.anime_parse_data()
-    for url in data[:4]:
-        await bot.send_message(
-            chat_id=call.from_user.id,
-            text=f"{url}"
-        )
-
-
 async def save_favourite_news(call: types.CallbackQuery):
     db = Database()
     owner_id = call.from_user.id
@@ -81,6 +71,16 @@ async def select_favourite_news(call: types.CallbackQuery):
         await bot.send_message(
             chat_id=call.from_user.id,
             text=f"{scraper.PLUS_URL + link['link']}",
+        )
+
+
+async def anime_scraper_call(call: types.CallbackQuery):
+    scraper = AnimeScraper()
+    data = scraper.anime_parse_data()
+    for url in data[:4]:
+        await bot.send_message(
+            chat_id=call.from_user.id,
+            text=f"{url}"
         )
 
 
