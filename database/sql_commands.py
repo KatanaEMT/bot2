@@ -17,6 +17,8 @@ class Database:
         self.connection.execute(sql_queries.CREATE_LIKE_TABLE_QUERY)
         self.connection.execute(sql_queries.CREATE_REFERRAL_TABLE_QUERY)
         self.connection.execute(sql_queries.CREATE_REFERRAL_USERS_TABLE_QUERY)
+        self.connection.execute(sql_queries.CREATE_NEWS_TABLE_QUERY)
+        self.connection.execute(sql_queries.CREATE_FAVOURITE_NEWS_TABLE_QUERY)
 
 
         try:
@@ -192,3 +194,47 @@ class Database:
             sql_queries.SELECT_REFERRAL_USERS_QUERY,
             (owner,)
         ).fetchall()
+
+    def sql_select_news(self):
+        self.cursor.row_factory = lambda cursor, row: {
+            "id": row[0],
+            "link": row[1],
+        }
+        return self.cursor.execute(
+            sql_queries.SELECT_NEWS
+        ).fetchall()
+
+    def sql_select_favourite_news(self, owner_id):
+        self.cursor.row_factory = lambda cursor, row: {
+            "id": row[0],
+            "owner_id": row[1],
+            "news_link": row[2],
+        }
+        return self.cursor.execute(
+            sql_queries.SELECT_FAVOURITE_NEWS,
+            (owner_id,)
+        ).fetchall()
+
+    def sql_insert_news(self, link):
+        self.cursor.execute(
+            sql_queries.INSERT_NEWS,
+            (None, link)
+        )
+        self.connection.commit()
+
+    def sql_insert_favourite_news(self, owner_id, news_link):
+        self.cursor.execute(
+            sql_queries.INSERT_FAVOURITE_NEWS,
+            (None, owner_id, news_link)
+        )
+        self.connection.commit()
+
+    def sql_select_link_news(self, news_link):
+        self.cursor.row_factory = lambda cursor, row: {
+            "id": row[0],
+            "link": row[1],
+        }
+        return self.cursor.execute(
+            sql_queries.SELECT_LINK_NEWS,
+            (news_link,)
+        ).fetchone()

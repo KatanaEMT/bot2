@@ -23,11 +23,21 @@ async def start_keyboard():
         text="Reference menu ヽ(✿ﾟ▽ﾟ)ノ",
         callback_data="reference_menu"
     )
+    news_button = InlineKeyboardButton(
+        "Latest News",
+        callback_data="news"
+    )
+    my_news_button = InlineKeyboardButton(
+        "My Favourite News",
+        callback_data="favourite_news"
+    )
+    markup.add(news_button)
     markup.add(questionnaire_button)
     markup.add(registration_button)
     markup.add(my_profile_button)
     markup.add(random_profile_button)
     markup.add(reference_menu_button)
+    markup.add(my_news_button)
     return markup
 
 
@@ -74,3 +84,14 @@ async def reference_menu_keyboard():
     markup.add(reference_button)
     markup.add(reference_profile_button)
     return markup
+
+
+async def save_favourite(id):
+    markup = InlineKeyboardMarkup()
+    save_favourite = InlineKeyboardButton(
+        "Save",
+        callback_data=f"save_{id}"
+    )
+    markup.add(save_favourite)
+    return markup
+

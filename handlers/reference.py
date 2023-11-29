@@ -33,12 +33,13 @@ async def reference_profile_call(call: types.CallbackQuery):
     data = db.sql_select_referral_users(
         owner=call.from_user.id
     )
+    users = ""
     for dat in data:
-        await bot.send_message(
-            chat_id=call.from_user.id,
-            text=f'user_name: @{dat ["user_name"]} \n'
-                 f'first_name: {dat ["first_name"]}'
-        )
+        users += f'user_name: @{dat ["user_name"]} \n first_name: {dat ["first_name"]} \n \n'
+    await bot.send_message(
+        chat_id=call.from_user.id,
+        text=users
+    )
 
 
 async def reference_link_call(call: types.CallbackQuery):
