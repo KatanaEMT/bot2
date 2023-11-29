@@ -6,6 +6,7 @@ from database.sql_commands import Database
 from key_boards.inline_buttons import questionnaire_keyboard, save_favourite
 from aiogram.dispatcher import FSMContext
 
+from scraping.my_scraping import AnimeScraper
 from scraping.news_scraper import NewsScraper
 
 
@@ -49,6 +50,16 @@ async def scraper_call(call: types.CallbackQuery):
         )
 
 
+async def anime_scraper_call(call: types.CallbackQuery):
+    scraper = AnimeScraper()
+    data = scraper.anime_parse_data()
+    for url in data[:4]:
+        await bot.send_message(
+            chat_id=call.from_user.id,
+            text=f"{url}"
+        )
+
+
 async def save_favourite_news(call: types.CallbackQuery):
     db = Database()
     owner_id = call.from_user.id
@@ -86,4 +97,6 @@ def register_callback_handlers(dp: Dispatcher):
                                        lambda call: call.data.startswith('save_'))
     dp.register_callback_query_handler(select_favourite_news,
                                        lambda call: call.data == "favourite_news")
+    dp.register_callback_query_handler(anime_scraper_call,
+                                       lambda call: call.data == "anime_link")
 

@@ -25,11 +25,15 @@ async def start_keyboard():
     )
     news_button = InlineKeyboardButton(
         "Latest News",
-        callback_data="news"
+        callback_data="news ✍️(◔◡◔)"
     )
     my_news_button = InlineKeyboardButton(
-        "My Favourite News",
+        "My Favourite News (＠_＠;)",
         callback_data="favourite_news"
+    )
+    anime_link_button = InlineKeyboardButton(
+        "Anime Link (❤️ ω ❤️)",
+        callback_data="anime_link"
     )
     markup.add(news_button)
     markup.add(questionnaire_button)
@@ -38,6 +42,7 @@ async def start_keyboard():
     markup.add(random_profile_button)
     markup.add(reference_menu_button)
     markup.add(my_news_button)
+    markup.add(anime_link_button)
     return markup
 
 
